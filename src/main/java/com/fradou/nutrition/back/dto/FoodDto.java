@@ -1,6 +1,5 @@
 package com.fradou.nutrition.back.dto;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fradou.nutrition.back.constant.FoodType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

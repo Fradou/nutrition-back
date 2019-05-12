@@ -12,4 +12,8 @@ public interface FoodMapper {
     FoodDto toDto(Food food);
 
     List<FoodDto> toDtoList(List<Food> foodList);
+
+    Food toPojo(FoodDto foodDto);
+
+    List<Food> toPojoList(List<FoodDto> foodDtoList);
 }

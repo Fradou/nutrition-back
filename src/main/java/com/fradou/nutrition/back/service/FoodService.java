@@ -6,4 +6,10 @@ import java.util.List;
 
 public interface FoodService {
     List<FoodDto> getAllFoods();
+
+    FoodDto getFoodById(Integer foodId);
+
+    FoodDto update(Integer idFood, FoodDto foodDto) throws Exception;
+
+    FoodDto createFood(FoodDto foodDto);
 }
