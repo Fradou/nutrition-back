@@ -1,5 +1,6 @@
 package com.fradou.nutrition.back.config;
 
+import com.fradou.nutrition.back.constant.FoodType;
 import com.fradou.nutrition.back.entity.Food;
 import com.fradou.nutrition.back.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class DataLoader implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
         List<Food> testFood = Arrays.asList(
-                Food.builder().label("Pomme").calorie(125).protein(5).carbohydrate(6.5).fat(4.3).build(),
-                Food.builder().label("Carotte").calorie(625).protein(53).carbohydrate(8.5).fat(3).build()
+                Food.builder().label("Pomme").calorie(125).protein(5).carbohydrate(6.5).fat(4.3).foodType(FoodType.VEGETABLE).build(),
+                Food.builder().label("Carotte").calorie(625).protein(53).carbohydrate(8.5).fat(3).foodType(FoodType.VEGETABLE).build()
         );
         foodRepository.saveAll(testFood);
     }

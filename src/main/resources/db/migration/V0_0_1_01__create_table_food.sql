@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS food (
   fat FLOAT,
   carbohydrate FLOAT,
   calorie FLOAT,
+  food_type VARCHAR (25),
 	PRIMARY KEY( id_food )
 );

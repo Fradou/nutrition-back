@@ -1,5 +1,6 @@
 package com.fradou.nutrition.back.entity;
 
+import com.fradou.nutrition.back.constant.FoodType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,4 +53,6 @@ public class Food implements Serializable {
     @Max(1000)
     @NotNull
     private double calorie;
+
+    private FoodType foodType;
 }

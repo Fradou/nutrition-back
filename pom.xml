@@ -14,7 +14,10 @@
 	<description>Back-end for my nutrition app</description>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
+		<swagger.version>2.0.0</swagger.version>
 	</properties>
 
 	<dependencies>
@@ -66,6 +69,33 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.2.0.Final</version>
         </dependency>
+
+        <!-- Api Swagger -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-servlet-initializer</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-hibernate-validations</artifactId>
+			<version>1.5.6</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -89,10 +119,51 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<!--<configuration>-->
-					<!--<source>11</source>-->
-					<!--<target>11</target>-->
-				<!--</configuration>-->
+				<version>3.8.0</version>
+				<configuration>
+					<release>${java.version}</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>3.1.6</version>
+				<configuration>
+					<apiSources>
+						<apiSource>
+							<springmvc>true</springmvc>
+							<locations>
+								com.fradou.nutrition.back
+							</locations>
+							<schemes>http,https</schemes>
+							<host>localhost:8080</host>
+							<basePath>/</basePath>
+							<info>
+								<title>Fradou - My nutrition app</title>
+								<version>v1</version>
+								<description>
+									Documentation application nutrition
+								</description>
+								<contact>
+									<name>Alexandre FRADET</name>
+								</contact>
+								<license>
+									<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+									<name>Apache 2.0</name>
+								</license>
+							</info>
+							<swaggerDirectory>${basedir}/target/generated/swagger-ui</swaggerDirectory>
+						</apiSource>
+					</apiSources>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
