@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS food (
+CREATE TABLE IF NOT EXISTS foods (
 	id_food serial,
 	label VARCHAR (25),
   protein FLOAT,

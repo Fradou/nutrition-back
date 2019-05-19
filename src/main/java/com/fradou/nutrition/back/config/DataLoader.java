@@ -1,26 +1,43 @@
 package com.fradou.nutrition.back.config;
 
-import com.fradou.nutrition.back.constant.FoodType;
+import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fradou.nutrition.back.entity.Food;
 import com.fradou.nutrition.back.repository.FoodRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
-import java.util.Arrays;
+import java.io.File;
 import java.util.List;
 
 @Configuration
+@Log4j2
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
     FoodRepository foodRepository;
 
-    public void run(String... args) throws Exception {
-        List<Food> testFood = Arrays.asList(
-                Food.builder().label("Pomme").calorie(125).protein(5).carbohydrate(6.5).fat(4.3).foodType(FoodType.VEGETABLE).build(),
-                Food.builder().label("Carotte").calorie(625).protein(53).carbohydrate(8.5).fat(3).foodType(FoodType.VEGETABLE).build()
-        );
-        foodRepository.saveAll(testFood);
+    private String FOOD_FILE = "food.csv";
+
+    public void run(String... args) {
+        List<Food> existingFoods = this.foodRepository.findAll();
+        if(existingFoods.size() == 0) {
+            try {
+                CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
+                CsvMapper mapper = new CsvMapper();
+                File file = new ClassPathResource("data/" + FOOD_FILE).getFile();
+                MappingIterator<Food> readValues =
+                        mapper.reader(Food.class).with(bootstrapSchema).readValues(file);
+                List<Food> foods = readValues.readAll();
+                foodRepository.saveAll(foods);
+                log.info("Jeu de données nourriture chargé");
+            } catch (Exception e) {
+                log.error("Erreur lors du chargement du jeu de données nourriture " + FOOD_FILE, e);
+            }
+        }
     }
 }

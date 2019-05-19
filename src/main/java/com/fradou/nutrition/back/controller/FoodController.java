@@ -5,6 +5,8 @@ import com.fradou.nutrition.back.service.FoodService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/foods")
@@ -29,8 +31,12 @@ public class FoodController {
 
     @GetMapping
     @ApiOperation(value = "Get list of all foods")
-    public List<FoodDto> getAllFoods() {
-        return foodService.getAllFoods();
+    public Page<FoodDto> getAllFoods(
+            @RequestParam(defaultValue = "20") Integer size,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(required = false) String search
+    ) {
+        return foodService.getAllFoods(search, PageRequest.of(page, size));
     }
 
     @GetMapping(value = "/{idFood}")

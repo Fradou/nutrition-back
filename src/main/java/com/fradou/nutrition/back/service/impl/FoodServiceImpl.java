@@ -7,9 +7,11 @@ import com.fradou.nutrition.back.mapper.FoodMapper;
 import com.fradou.nutrition.back.repository.FoodRepository;
 import com.fradou.nutrition.back.service.FoodService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import static com.fradou.nutrition.back.repository.specification.FoodSpecification.bySearchTerm;
 
 @Service
 @AllArgsConstructor
@@ -20,8 +22,8 @@ public class FoodServiceImpl implements FoodService {
     private FoodMapper foodMapper;
 
     @Override
-    public List<FoodDto> getAllFoods() {
-        return foodMapper.toDtoList(foodRepository.findAll());
+    public Page<FoodDto> getAllFoods(String search, PageRequest page) {
+        return foodRepository.findAll(bySearchTerm(search), page).map(foodMapper::toDto);
     }
 
     @Override

@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name="food")
+@Table(name="foods")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

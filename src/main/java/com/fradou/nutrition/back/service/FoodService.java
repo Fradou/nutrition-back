@@ -1,11 +1,11 @@
 package com.fradou.nutrition.back.service;
 
 import com.fradou.nutrition.back.dto.FoodDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public interface FoodService {
-    List<FoodDto> getAllFoods();
+    Page<FoodDto> getAllFoods(String search, PageRequest of);
 
     FoodDto getFoodById(Integer foodId);
 
