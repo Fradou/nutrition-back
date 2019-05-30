@@ -1,22 +1,27 @@
 package com.fradou.nutrition.back.controller;
 
-import com.fradou.nutrition.back.entity.PantryItem;
+import com.fradou.nutrition.back.dto.PantryItemDto;
 import com.fradou.nutrition.back.service.PantryItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/pantryItems")
 @AllArgsConstructor
 @Api(value = "/pantryItems", description = "Controller for pantry items operation")
+@CrossOrigin("*")
 public class PantryItemController {
 
     private PantryItemService pantryItemService;
@@ -26,8 +31,13 @@ public class PantryItemController {
     @ApiImplicitParams({
             @ApiImplicitParam()
     })
-    public List<PantryItem> getPantryItems() {
+    public List<PantryItemDto> getPantryItems() {
         return pantryItemService.getAllPantryItems();
     }
 
+    @PostMapping
+    @ApiOperation(value = "Create new pantryItem")
+    public PantryItemDto createPantryItem(@RequestBody @Valid PantryItemDto dto) {
+        return pantryItemService.createPantryItem(dto);
+    }
 }

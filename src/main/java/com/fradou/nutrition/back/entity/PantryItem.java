@@ -38,7 +38,8 @@ public class PantryItem {
     @Min(0)
     private Integer share;
 
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="food_id")
+    // TODO Lazy
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="id_food")
     private Food food;
 }
