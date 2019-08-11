@@ -46,6 +46,8 @@ public class DataLoader implements CommandLineRunner {
             } catch (Exception e) {
                 log.error("Erreur lors du chargement du jeu de données nourriture " + FOOD_FILE, e);
             }
+        } else {
+            log.info("Données déjà présente en base, aucun chargement réalisé");
         }
         List<PantryItem> items = this.pantryItemRepository.findAll();
         if (items.size() < 1) {

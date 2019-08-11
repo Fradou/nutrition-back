@@ -1,12 +1,14 @@
 package com.fradou.nutrition.back.service;
 
 import com.fradou.nutrition.back.dto.PantryItemDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface PantryItemService {
 
-    List<PantryItemDto> getAllPantryItems();
+    Page<PantryItemDto> getAll(String food, Pageable pageable);
 
-    PantryItemDto createPantryItem(PantryItemDto dto);
+    PantryItemDto createOrUpdate(PantryItemDto dto);
+
+    void delete(Integer id);
 }
