@@ -23,7 +23,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Page<FoodDto> getAllFoods(String search, PageRequest page) {
-        return foodRepository.findAll(bySearchTerm(search), page).map(foodMapper::toDto);
+        return foodRepository.findAll(page).map(foodMapper::toDto);
     }
 
     @Override
