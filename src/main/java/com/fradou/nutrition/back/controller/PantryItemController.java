@@ -41,19 +41,12 @@ public class PantryItemController {
 
     @GetMapping
     @ApiOperation(value = "Get list of pantry items, base on params")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "food", value = "Nom de la nourriture", dataType = "String"),
-            @ApiImplicitParam(name = "page", value = "Numéro de la page, si pagination", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "size", value = "Nombre d'éléments dans la page, si pagination", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "orderBy", value = "Champs par lequel ordonner les résultats", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "orderDir", value = "Sens dans lequel trier", dataType = "String", paramType = "query", allowableValues = "DESC, ASC"),
-    })
     public Page<PantryItemDto> getPantryItems(
             @RequestParam(required = false) String food,
-            @RequestParam(defaultValue = "20") Integer size,
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "expirationDate") String orderBy,
-            @RequestParam(defaultValue = "ASC") String orderDir
+            @RequestParam(defaultValue = "20", required = false) Integer size,
+            @RequestParam(defaultValue = "0", required = false) Integer page,
+            @RequestParam(defaultValue = "expirationDate", required = false) String orderBy,
+            @RequestParam(defaultValue = "ASC", required = false) String orderDir
 
     ) {
         if (!ALLOWED_ORDER.contains(orderBy)) {

@@ -10,7 +10,7 @@ public class PantryItemPredicateBuilder {
 
     public static Predicate foodNameLike(String foodName) {
         return foodName != null ?
-                pantryItem.food.label.like(Expressions.asString("%").concat(foodName).concat("%"))
+                pantryItem.food.label.likeIgnoreCase(Expressions.asString("%").concat(foodName).concat("%"))
                 : null;
     }
 }
